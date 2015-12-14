@@ -1,0 +1,275 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		180923121C1C86BC00A146D8 /* commander.c in Sources */ = {isa = PBXBuildFile; fileRef = 180923101C1C86BC00A146D8 /* commander.c */; };
+		180923151C1DA25B00A146D8 /* DYOptionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 180923141C1DA25B00A146D8 /* DYOptionParser.m */; };
+		18577C5E1C1B432100CE546B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18577C5D1C1B432100CE546B /* main.m */; };
+		18577C661C1B445000CE546B /* DreamRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 18577C651C1B445000CE546B /* DreamRecord.m */; };
+		18577C691C1BBC0700CE546B /* DataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 18577C681C1BBC0700CE546B /* DataBase.m */; };
+		18577C6C1C1C330400CE546B /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 18577C6B1C1C330400CE546B /* Controller.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		18577C581C1B432000CE546B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		180923101C1C86BC00A146D8 /* commander.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = commander.c; sourceTree = "<group>"; };
+		180923111C1C86BC00A146D8 /* commander.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commander.h; sourceTree = "<group>"; };
+		180923131C1DA25B00A146D8 /* DYOptionParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DYOptionParser.h; sourceTree = "<group>"; };
+		180923141C1DA25B00A146D8 /* DYOptionParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DYOptionParser.m; sourceTree = "<group>"; };
+		18577C5A1C1B432000CE546B /* DreamBook */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DreamBook; sourceTree = BUILT_PRODUCTS_DIR; };
+		18577C5D1C1B432100CE546B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		18577C641C1B445000CE546B /* DreamRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DreamRecord.h; sourceTree = "<group>"; };
+		18577C651C1B445000CE546B /* DreamRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DreamRecord.m; sourceTree = "<group>"; };
+		18577C671C1BBC0700CE546B /* DataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataBase.h; sourceTree = "<group>"; };
+		18577C681C1BBC0700CE546B /* DataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBase.m; sourceTree = "<group>"; };
+		18577C6A1C1C330400CE546B /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
+		18577C6B1C1C330400CE546B /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		18577C571C1B432000CE546B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		18577C511C1B432000CE546B = {
+			isa = PBXGroup;
+			children = (
+				18577C5C1C1B432000CE546B /* DreamBook */,
+				18577C5B1C1B432000CE546B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		18577C5B1C1B432000CE546B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				18577C5A1C1B432000CE546B /* DreamBook */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		18577C5C1C1B432000CE546B /* DreamBook */ = {
+			isa = PBXGroup;
+			children = (
+				18577C5D1C1B432100CE546B /* main.m */,
+				180923131C1DA25B00A146D8 /* DYOptionParser.h */,
+				180923141C1DA25B00A146D8 /* DYOptionParser.m */,
+				18577C6A1C1C330400CE546B /* Controller.h */,
+				18577C6B1C1C330400CE546B /* Controller.m */,
+				18577C641C1B445000CE546B /* DreamRecord.h */,
+				18577C651C1B445000CE546B /* DreamRecord.m */,
+				18577C671C1BBC0700CE546B /* DataBase.h */,
+				18577C681C1BBC0700CE546B /* DataBase.m */,
+				180923101C1C86BC00A146D8 /* commander.c */,
+				180923111C1C86BC00A146D8 /* commander.h */,
+			);
+			path = DreamBook;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		18577C591C1B432000CE546B /* DreamBook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18577C611C1B432100CE546B /* Build configuration list for PBXNativeTarget "DreamBook" */;
+			buildPhases = (
+				18577C561C1B432000CE546B /* Sources */,
+				18577C571C1B432000CE546B /* Frameworks */,
+				18577C581C1B432000CE546B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DreamBook;
+			productName = DreamBook;
+			productReference = 18577C5A1C1B432000CE546B /* DreamBook */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		18577C521C1B432000CE546B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = duanyu;
+				TargetAttributes = {
+					18577C591C1B432000CE546B = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+				};
+			};
+			buildConfigurationList = 18577C551C1B432000CE546B /* Build configuration list for PBXProject "DreamBook" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 18577C511C1B432000CE546B;
+			productRefGroup = 18577C5B1C1B432000CE546B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				18577C591C1B432000CE546B /* DreamBook */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		18577C561C1B432000CE546B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				180923151C1DA25B00A146D8 /* DYOptionParser.m in Sources */,
+				18577C661C1B445000CE546B /* DreamRecord.m in Sources */,
+				18577C5E1C1B432100CE546B /* main.m in Sources */,
+				18577C691C1BBC0700CE546B /* DataBase.m in Sources */,
+				180923121C1C86BC00A146D8 /* commander.c in Sources */,
+				18577C6C1C1C330400CE546B /* Controller.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		18577C5F1C1B432100CE546B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		18577C601C1B432100CE546B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		18577C621C1B432100CE546B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		18577C631C1B432100CE546B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		18577C551C1B432000CE546B /* Build configuration list for PBXProject "DreamBook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18577C5F1C1B432100CE546B /* Debug */,
+				18577C601C1B432100CE546B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		18577C611C1B432100CE546B /* Build configuration list for PBXNativeTarget "DreamBook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18577C621C1B432100CE546B /* Debug */,
+				18577C631C1B432100CE546B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 18577C521C1B432000CE546B /* Project object */;
+}
