@@ -32,24 +32,27 @@ static Controller *instance;
 {
     if (self = [super init]) {
         DYOption *optAdd = [DYOption optionWithFlag:@"a" name:@"add" has_arg:DYOption_argument_no opt_description:@"add one record" block:^(DYOption *opt) {
-            
+            printf("a\n");
         }];
         DYOption *optName = [DYOption optionWithFlag:@"n" name:@"name" has_arg:DYOption_argument_required opt_description:@"name of the record" block:^(DYOption *opt) {
-            
+            printf("n\n");
         }];
         DYOption *optContent = [DYOption optionWithFlag:@"c" name:@"content" has_arg:DYOption_argument_required opt_description:@"content of the record" block:^(DYOption *opt) {
-            
+            printf("c\n");
         }];
         DYOption *optkeywords = [DYOption optionWithFlag:@"k" name:@"keywords" has_arg:DYOption_argument_required opt_description:@"keywords of the record" block:^(DYOption *opt) {
-            
+            printf("k\n");
         }];
         DYOption *optParent = [DYOption optionWithFlag:@"p" name:@"parent" has_arg:DYOption_argument_required opt_description:@"parentRecord of the record" block:^(DYOption *opt) {
-            
+            printf("p\n");
         }];
         DYOption *optOther = [DYOption optionWithFlag:@"o" name:@"otherInfo" has_arg:DYOption_argument_required opt_description:@"otherInfo of the record" block:^(DYOption *opt) {
-            
+            printf("o\n");
         }];
-        self.options = [NSArray arrayWithObjects:optAdd, optName, optContent, optkeywords, optParent, optOther, nil];
+        DYOption *optLongOnly = [DYOption optionWithFlag:nil name:@"test" has_arg:DYOption_argument_no opt_description:@"longOnly" block:^(DYOption *opt) {
+            printf("0\n");
+        }];
+        self.options = [NSArray arrayWithObjects:optAdd, optName, optContent, optkeywords, optParent, optOther, optLongOnly, nil];
     }
     return self;
 }

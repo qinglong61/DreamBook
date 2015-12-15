@@ -53,30 +53,40 @@ static DYOptionParser *parser;
 
 - (BOOL)parseOptions:(NSArray *)options argc:(int)argc argv:(const char **)argv error:(NSError *__autoreleasing *)error
 {
+    argc = 2;
+    char * argv1[2];
+    argv1[0] = argv[0];
+    argv1[1] = "--ta";
+    
+    
     [self.options addObjectsFromArray:options];
     
     if (![self containsOptHelp]) {
         DYOption *optHelp = [DYOption optionWithFlag:@"h" name:@"help" has_arg:DYOption_argument_no opt_description:@"help" block:^(DYOption *opt) {
-            
+            printf("h\n");
+            [self showUsage];
         }];
         [self.options addObject:optHelp];
     }
     
     if (![self containsOptQuestionMark]) {
         DYOption *optQuestionMark = [DYOption optionWithFlag:@"?" name:@"help" has_arg:DYOption_argument_no opt_description:@"help" block:^(DYOption *opt) {
-            
+            printf("?\n");
+            [self showUsage];
         }];
         [self.options addObject:optQuestionMark];
     }
     
     int flag = 0;
     NSMutableString *optString = [[NSMutableString alloc] init];
-    struct option opts[options.count];
+    struct option opts[self.options.count];
     int optIndex = 0;
     
-    for (int i = 0; i < options.count; i++) {
-        DYOption *option = options[i];
-        [optString appendString:option.flag];
+    for (int i = 0; i < self.options.count; i++) {
+        DYOption *option = self.options[i];
+        if (option.flag) {
+            [optString appendString:option.flag];
+        }
         if (option.has_arg) {
             [optString appendString:@":"];
         }
@@ -89,15 +99,11 @@ static DYOptionParser *parser;
         };
     }
     
-    flag = getopt_long(argc, (char * const *)argv, [optString UTF8String], opts, &optIndex);
+    flag = getopt_long(argc, (char * const *)argv1, [optString UTF8String], opts, &optIndex);
     while( flag != -1 ) {
         switch( flag ) {
-            case 'h':   /* fall-through is intentional */
-            case '?':
-                [self showUsage];
-                break;
-                
             case 0:		/* long option without a short arg */
+                printf("xxx\n");
                 break;
                 
             default:
@@ -105,12 +111,14 @@ static DYOptionParser *parser;
         }
         DYOption *option = [self getOptionByFlag:[NSString stringWithUTF8String:(char *)&flag]];
         if (!option) {
-            option = [self getOptionByName:@""];
+            NSString *name = [NSString stringWithUTF8String:opts[optIndex].name];
+            option = [self getOptionByName:name];
+            printf("%s\n", [name UTF8String]);
         }
         if (option.block) {
             option.block(option);
         }
-        flag = getopt_long(argc, (char * const *)argv, [optString UTF8String], opts, &optIndex);
+        flag = getopt_long(argc, (char * const *)argv1, [optString UTF8String], opts, &optIndex);
     }
     
     return YES;
@@ -126,20 +134,20 @@ static DYOptionParser *parser;
         return line;
     };
     
-    NSMutableArray *description = [NSMutableArray arrayWithObject:@""];
+    NSMutableArray *description = [NSMutableArray arrayWithObject:[NSString stringWithFormat:@"usage: %@ [options]", [NSProcessInfo processInfo].processName]];
     for (id each in self.options) {
         NSMutableString *line = [NSMutableString new];
         if ([each isKindOfClass:[DYOption class]]) {
             DYOption *option = each;
             [line appendString:@"    "];
             if (option.flag) {
-                [line appendFormat:@"-%c", option.flag];
+                [line appendFormat:@"-%@", option.flag];
                 [line appendString:option.name ? @", " : @"  "];
             } else {
                 [line appendString:@"    "];
             }
             if (option.name) {
-                [line appendFormat:@"--%-24s   ", option.name];
+                [line appendFormat:@"--%-24@   ", option.name];
             } else {
                 [line appendString:@"                             "];
             }

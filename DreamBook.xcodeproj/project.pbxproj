@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		180923121C1C86BC00A146D8 /* commander.c in Sources */ = {isa = PBXBuildFile; fileRef = 180923101C1C86BC00A146D8 /* commander.c */; };
 		180923151C1DA25B00A146D8 /* DYOptionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 180923141C1DA25B00A146D8 /* DYOptionParser.m */; };
 		18577C5E1C1B432100CE546B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18577C5D1C1B432100CE546B /* main.m */; };
 		18577C661C1B445000CE546B /* DreamRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 18577C651C1B445000CE546B /* DreamRecord.m */; };
@@ -28,8 +27,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		180923101C1C86BC00A146D8 /* commander.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = commander.c; sourceTree = "<group>"; };
-		180923111C1C86BC00A146D8 /* commander.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commander.h; sourceTree = "<group>"; };
 		180923131C1DA25B00A146D8 /* DYOptionParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DYOptionParser.h; sourceTree = "<group>"; };
 		180923141C1DA25B00A146D8 /* DYOptionParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DYOptionParser.m; sourceTree = "<group>"; };
 		18577C5A1C1B432000CE546B /* DreamBook */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DreamBook; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,8 +78,6 @@
 				18577C651C1B445000CE546B /* DreamRecord.m */,
 				18577C671C1BBC0700CE546B /* DataBase.h */,
 				18577C681C1BBC0700CE546B /* DataBase.m */,
-				180923101C1C86BC00A146D8 /* commander.c */,
-				180923111C1C86BC00A146D8 /* commander.h */,
 			);
 			path = DreamBook;
 			sourceTree = "<group>";
@@ -147,7 +142,6 @@
 				18577C661C1B445000CE546B /* DreamRecord.m in Sources */,
 				18577C5E1C1B432100CE546B /* main.m in Sources */,
 				18577C691C1BBC0700CE546B /* DataBase.m in Sources */,
-				180923121C1C86BC00A146D8 /* commander.c in Sources */,
 				18577C6C1C1C330400CE546B /* Controller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
