@@ -94,7 +94,7 @@ static DYOptionParser *parser;
         switch( flag ) {
             case 'h':   /* fall-through is intentional */
             case '?':
-//                displayUsage();
+                [self showUsage];
                 break;
                 
             case 0:		/* long option without a short arg */
@@ -107,54 +107,57 @@ static DYOptionParser *parser;
         if (!option) {
             option = [self getOptionByName:@""];
         }
-        flag = getopt_long(argc, argv, [optString UTF8String], opts, &optIndex);
+        if (option.block) {
+            option.block(option);
+        }
+        flag = getopt_long(argc, (char * const *)argv, [optString UTF8String], opts, &optIndex);
     }
     
     return YES;
 }
 
-//- (NSString *)Usage
-//{
-//    NSMutableString *(^trimLine)(NSMutableString *) = ^NSMutableString *(NSMutableString *line) {
-//        NSRange range = [line rangeOfCharacterFromSet:[[NSCharacterSet whitespaceCharacterSet] invertedSet] options:NSBackwardsSearch];
-//        if (range.location != NSNotFound) {
-//            line = [[line substringToIndex:range.location + 1] mutableCopy];
-//        }
-//        return line;
-//    };
-//    
-//    NSMutableArray *description = [NSMutableArray arrayWithObject:self.banner];
-//    for (id each in self.options) {
-//        NSMutableString *line = [NSMutableString new];
-//        if ([each isKindOfClass:[DYOption class]]) {
-//            DYOption *option = each;
-//            [line appendString:@"    "];
-//            if (option.flag) {
-//                [line appendFormat:@"-%c", option.flag];
-//                [line appendString:option.name ? @", " : @"  "];
-//            } else {
-//                [line appendString:@"    "];
-//            }
-//            if (option.name) {
-//                [line appendFormat:@"%@%-24s   ", [self longPrefix], option.name];
-//            } else {
-//                [line appendString:@"                             "];
-//            }
-//            if (line.length > 37) {
-//                line = trimLine(line);
-//                [line appendString:@"\n                                     "];
-//            }
-//            if (option.description) {
-//                [line appendString:option.description];
-//            }
-//            line = trimLine(line);
-//        } else {
-//            [line appendFormat:@"%@", each];
-//        }
-//        [description addObject:line];
-//    }
-//    return [[description componentsJoinedByString:@"\n"] stringByAppendingString:@"\n"];
-//}
+- (NSString *)showUsage
+{
+    NSMutableString *(^trimLine)(NSMutableString *) = ^NSMutableString *(NSMutableString *line) {
+        NSRange range = [line rangeOfCharacterFromSet:[[NSCharacterSet whitespaceCharacterSet] invertedSet] options:NSBackwardsSearch];
+        if (range.location != NSNotFound) {
+            line = [[line substringToIndex:range.location + 1] mutableCopy];
+        }
+        return line;
+    };
+    
+    NSMutableArray *description = [NSMutableArray arrayWithObject:@""];
+    for (id each in self.options) {
+        NSMutableString *line = [NSMutableString new];
+        if ([each isKindOfClass:[DYOption class]]) {
+            DYOption *option = each;
+            [line appendString:@"    "];
+            if (option.flag) {
+                [line appendFormat:@"-%c", option.flag];
+                [line appendString:option.name ? @", " : @"  "];
+            } else {
+                [line appendString:@"    "];
+            }
+            if (option.name) {
+                [line appendFormat:@"--%-24s   ", option.name];
+            } else {
+                [line appendString:@"                             "];
+            }
+            if (line.length > 37) {
+                line = trimLine(line);
+                [line appendString:@"\n                                     "];
+            }
+            if (option.description) {
+                [line appendString:option.description];
+            }
+            line = trimLine(line);
+        } else {
+            [line appendFormat:@"%@", each];
+        }
+        [description addObject:line];
+    }
+    return [[description componentsJoinedByString:@"\n"] stringByAppendingString:@"\n"];
+}
 
 - (BOOL)containsOptHelp
 {
