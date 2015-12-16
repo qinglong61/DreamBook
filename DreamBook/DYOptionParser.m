@@ -52,13 +52,7 @@ static DYOptionParser *parser;
 }
 
 - (BOOL)parseOptions:(NSArray *)options argc:(int)argc argv:(const char **)argv error:(NSError *__autoreleasing *)error
-{
-    argc = 2;
-    char * argv1[2];
-    argv1[0] = argv[0];
-    argv1[1] = "--ta";
-    
-    
+{   
     [self.options addObjectsFromArray:options];
     
     if (![self containsOptHelp]) {
@@ -79,7 +73,8 @@ static DYOptionParser *parser;
     
     int flag = 0;
     NSMutableString *optString = [[NSMutableString alloc] init];
-    struct option opts[self.options.count];
+    struct option * opts = malloc((self.options.count + 1) * sizeof(struct option));
+    
     int optIndex = 0;
     
     for (int i = 0; i < self.options.count; i++) {
@@ -99,32 +94,21 @@ static DYOptionParser *parser;
         };
     }
     
-    flag = getopt_long(argc, (char * const *)argv1, [optString UTF8String], opts, &optIndex);
-    while( flag != -1 ) {
-        switch( flag ) {
-            case 0:		/* long option without a short arg */
-                printf("xxx\n");
-                break;
-                
-            default:
-                break;
-        }
+    while( (flag = getopt_long(argc, (char * const *)argv, [optString UTF8String], opts, &optIndex)) != -1 ) {
         DYOption *option = [self getOptionByFlag:[NSString stringWithUTF8String:(char *)&flag]];
         if (!option) {
             NSString *name = [NSString stringWithUTF8String:opts[optIndex].name];
             option = [self getOptionByName:name];
-            printf("%s\n", [name UTF8String]);
         }
         if (option.block) {
             option.block(option);
         }
-        flag = getopt_long(argc, (char * const *)argv1, [optString UTF8String], opts, &optIndex);
     }
     
     return YES;
 }
 
-- (NSString *)showUsage
+- (void)showUsage
 {
     NSMutableString *(^trimLine)(NSMutableString *) = ^NSMutableString *(NSMutableString *line) {
         NSRange range = [line rangeOfCharacterFromSet:[[NSCharacterSet whitespaceCharacterSet] invertedSet] options:NSBackwardsSearch];
@@ -156,7 +140,7 @@ static DYOptionParser *parser;
                 [line appendString:@"\n                                     "];
             }
             if (option.description) {
-                [line appendString:option.description];
+                [line appendString:option.opt_description];
             }
             line = trimLine(line);
         } else {
@@ -164,7 +148,8 @@ static DYOptionParser *parser;
         }
         [description addObject:line];
     }
-    return [[description componentsJoinedByString:@"\n"] stringByAppendingString:@"\n"];
+    NSString *usage = [[description componentsJoinedByString:@"\n"] stringByAppendingString:@"\n"];
+    printf("%s\n", [usage UTF8String]);
 }
 
 - (BOOL)containsOptHelp
