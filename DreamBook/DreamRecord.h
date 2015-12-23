@@ -15,9 +15,16 @@ typedef enum
     DreamRecordStatusDone,
     DreamRecordStatusPause,
     DreamRecordStatusCancel,
-    DreamRecordStatusOther,
+    DreamRecordStatusOther
 }
 DreamRecordStatus;
+
+@interface DreamRecordEvent : NSObject
+
+@property (nonatomic, assign) DreamRecordStatus status;
+@property (nonatomic, assign) NSTimeInterval startTime;
+
+@end
 
 @interface DreamRecord : NSObject
 
@@ -26,12 +33,19 @@ DreamRecordStatus;
 @property (nonatomic, retain) NSString *content;
 @property (nonatomic, retain) NSString *otherInfo;
 
-@property (nonatomic, assign) NSUInteger tag;
-@property (nonatomic, retain) NSArray<NSString *> *timePoints;
-@property (nonatomic, assign) DreamRecordStatus status;
+@property (nonatomic, assign, readonly) NSUInteger identity;
+@property (nonatomic, retain, readonly) NSArray<DreamRecordEvent *> *history;
 
 @property (nonatomic, assign) NSArray<DreamRecord *> *parentDreamRecords;
-@property (nonatomic, retain) NSArray<DreamRecord *> *childDreamRecords;
+@property (nonatomic, retain, readonly) NSArray<DreamRecord *> *childDreamRecords;
+
+- (instancetype)initWithName:(NSString *)name;
+
+- (instancetype)initWithName:(NSString *)name
+                     content:(NSString *)content
+                    KeyWords:(NSArray<NSString *> *)keyWords
+                   otherInfo:(NSString *)otherInfo
+          parentDreamRecords:(NSArray<DreamRecord *> *)parentDreamRecords;
 
 @end
 

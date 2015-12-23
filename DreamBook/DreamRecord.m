@@ -38,4 +38,22 @@
 
 @implementation DreamRecord
 
+- (instancetype)initWithName:(NSString *)name
+{
+    return [self initWithName:name content:nil KeyWords:nil otherInfo:nil parentDreamRecords:nil];
+}
+
+- (instancetype)initWithName:(NSString *)name content:(NSString *)content KeyWords:(NSArray<NSString *> *)keyWords otherInfo:(NSString *)otherInfo parentDreamRecords:(NSArray<DreamRecord *> *)parentDreamRecords
+{
+    self = [self init];
+    if (self) {
+        self.name = name;
+        self.content = content;
+        self.keyWords = keyWords;
+        self.otherInfo = otherInfo;
+        self.parentDreamRecords = parentDreamRecords;
+    }
+    return self;
+}
+
 @end
