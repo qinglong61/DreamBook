@@ -16,15 +16,17 @@ typedef enum
 }
 DYOption_argument;
 
+typedef void (^DYOptionBlock)(NSArray<NSString *> *args);
+
 @interface DYOption : NSObject
 
 @property (nonatomic, retain) NSString *flag;
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, assign) DYOption_argument has_arg;
 @property (nonatomic, retain) NSString *opt_description;
-@property (nonatomic, copy) void (^block)(DYOption *opt);
+@property (nonatomic, copy) DYOptionBlock block;
 
-+ (DYOption *)optionWithFlag:(NSString *)flag name:(NSString *)name has_arg:(DYOption_argument)has_arg opt_description:(NSString *)opt_description block:(void (^)(DYOption *opt))block;
++ (DYOption *)optionWithFlag:(NSString *)flag name:(NSString *)name has_arg:(DYOption_argument)has_arg opt_description:(NSString *)opt_description block:(DYOptionBlock)block;
 
 @end
 

@@ -11,7 +11,7 @@
 
 @implementation DYOption
 
-+ (DYOption *)optionWithFlag:(NSString *)flag name:(NSString *)name has_arg:(DYOption_argument)has_arg opt_description:(NSString *)opt_description block:(void (^)(DYOption *opt))block
++ (DYOption *)optionWithFlag:(NSString *)flag name:(NSString *)name has_arg:(DYOption_argument)has_arg opt_description:(NSString *)opt_description block:(DYOptionBlock)block
 {
     DYOption *opt = [[DYOption alloc] init];
     opt.flag = flag;
@@ -51,21 +51,24 @@ static DYOptionParser *parser;
     return self;
 }
 
-- (BOOL)parseOptions:(NSArray *)options argc:(int)argc argv:(const char **)argv error:(NSError *__autoreleasing *)error
-{   
+- (BOOL)parseOptions:(NSArray<DYOption *> *)options argc:(int)argc argv:(const char **)argv error:(NSError *__autoreleasing *)error
+{
+    [self.options removeAllObjects];
     [self.options addObjectsFromArray:options];
     
+    [self.options sortUsingComparator:^NSComparisonResult(DYOption *opt1, DYOption *opt2) {
+        return [opt1.flag compare:opt2.flag];
+    }];
+    
     if (![self containsOptHelp]) {
-        DYOption *optHelp = [DYOption optionWithFlag:@"h" name:@"help" has_arg:DYOption_argument_no opt_description:@"help" block:^(DYOption *opt) {
-            printf("h\n");
+        DYOption *optHelp = [DYOption optionWithFlag:@"h" name:@"help" has_arg:DYOption_argument_no opt_description:@"help" block:^(NSArray<NSString *> *args) {
             [self showUsage];
         }];
         [self.options addObject:optHelp];
     }
     
     if (![self containsOptQuestionMark]) {
-        DYOption *optQuestionMark = [DYOption optionWithFlag:@"?" name:@"help" has_arg:DYOption_argument_no opt_description:@"help" block:^(DYOption *opt) {
-            printf("?\n");
+        DYOption *optQuestionMark = [DYOption optionWithFlag:@"?" name:@"help" has_arg:DYOption_argument_no opt_description:@"help" block:^(NSArray<NSString *> *args) {
             [self showUsage];
         }];
         [self.options addObject:optQuestionMark];
@@ -94,14 +97,42 @@ static DYOptionParser *parser;
         };
     }
     
-    while( (flag = getopt_long(argc, (char * const *)argv, [optString UTF8String], opts, &optIndex)) != -1 ) {
+    while ( (flag = getopt_long(argc, (char * const *)argv, [optString UTF8String], opts, &optIndex)) != -1 )
+    {
+//        printf("[optIndex]=%d\n", optIndex);
+//        
+//        printf("[optarg]=%s\n", optarg);
+//        printf("[optind]=%d\n", optind);
+//        printf("[args]=%s\n", argv[optind-1]);
+//        
+//        printf("[flag]=%c\n", flag);
+//        printf("[opterr]=%d\n", opterr);
+//        printf("[optopt]=%c\n", optopt);
+//        printf("[optreset]=%d\n", optreset);
+        
+        if (opterr && flag=='?') {
+            NSString *errInfo = [NSString stringWithFormat:@"%@: invalid option %s", [NSProcessInfo processInfo].processName, argv[optind-1]];
+            *error = [NSError errorWithDomain:@"DYOptionParserDomain" code:1 userInfo:@{NSLocalizedDescriptionKey: errInfo}];
+        }
+        
         DYOption *option = [self getOptionByFlag:[NSString stringWithUTF8String:(char *)&flag]];
         if (!option) {
             NSString *name = [NSString stringWithUTF8String:opts[optIndex].name];
             option = [self getOptionByName:name];
         }
-        if (option.block) {
-            option.block(option);
+        
+        if (option.has_arg) {
+            NSMutableArray *args = [[NSMutableArray alloc] init];
+            for (int i = optind-1; argv[i][0] != '-'; i++) {
+                [args addObject:[NSString stringWithUTF8String:argv[i]]];
+            }
+            if (option.block) {
+                option.block(args);
+            }
+        } else {
+            if (option.block) {
+                option.block(NULL);
+            }
         }
     }
     
@@ -110,45 +141,42 @@ static DYOptionParser *parser;
 
 - (void)showUsage
 {
-    NSMutableString *(^trimLine)(NSMutableString *) = ^NSMutableString *(NSMutableString *line) {
-        NSRange range = [line rangeOfCharacterFromSet:[[NSCharacterSet whitespaceCharacterSet] invertedSet] options:NSBackwardsSearch];
-        if (range.location != NSNotFound) {
-            line = [[line substringToIndex:range.location + 1] mutableCopy];
+    NSUInteger maxNameLength = 0;
+    for (DYOption *option in self.options) {
+        if (option.name.length > maxNameLength) {
+            maxNameLength = option.name.length;
         }
-        return line;
-    };
-    
-    NSMutableArray *description = [NSMutableArray arrayWithObject:[NSString stringWithFormat:@"usage: %@ [options]", [NSProcessInfo processInfo].processName]];
-    for (id each in self.options) {
-        NSMutableString *line = [NSMutableString new];
-        if ([each isKindOfClass:[DYOption class]]) {
-            DYOption *option = each;
-            [line appendString:@"    "];
-            if (option.flag) {
-                [line appendFormat:@"-%@", option.flag];
-                [line appendString:option.name ? @", " : @"  "];
-            } else {
-                [line appendString:@"    "];
-            }
-            if (option.name) {
-                [line appendFormat:@"--%-24@   ", option.name];
-            } else {
-                [line appendString:@"                             "];
-            }
-            if (line.length > 37) {
-                line = trimLine(line);
-                [line appendString:@"\n                                     "];
-            }
-            if (option.description) {
-                [line appendString:option.opt_description];
-            }
-            line = trimLine(line);
-        } else {
-            [line appendFormat:@"%@", each];
-        }
-        [description addObject:line];
     }
-    NSString *usage = [[description componentsJoinedByString:@"\n"] stringByAppendingString:@"\n"];
+    
+    NSMutableString *usage = [NSMutableString stringWithFormat:@"usage: %@ -options\n", [NSProcessInfo processInfo].processName];
+    for (DYOption *option in self.options) {
+        NSMutableString *line = [NSMutableString new];
+        [line appendString:@"    "];
+        if (option.flag) {
+            [line appendFormat:@"-%@", option.flag];
+            [line appendString:option.name ? @", " : @"  "];
+        } else {
+            [line appendString:@"    "];
+        }
+        if (option.name) {
+            [line appendFormat:@"--%@ ", option.name];
+        } else {
+            [line appendString:@"     "];
+        }
+        if (option.has_arg) {
+            [line appendString:@"[...] "];
+        } else {
+            [line appendString:@"      "];
+        }
+        for (int i = 0; i < maxNameLength - option.name.length + 1; i++) {
+            [line appendString:@" "];
+        }
+        if (option.description) {
+            [line appendString:[NSString stringWithFormat:@"\"%@\"", option.opt_description]];
+        }
+        [usage appendString:line];
+        [usage appendString:@"\n"];
+    }
     printf("%s\n", [usage UTF8String]);
 }
 
