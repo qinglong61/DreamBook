@@ -164,7 +164,7 @@ static DYOptionParser *parser;
             [line appendString:@"     "];
         }
         if (option.has_arg) {
-            [line appendString:@"[...] "];
+            [line appendString:@"<...> "];
         } else {
             [line appendString:@"      "];
         }
@@ -172,7 +172,7 @@ static DYOptionParser *parser;
             [line appendString:@" "];
         }
         if (option.description) {
-            [line appendString:[NSString stringWithFormat:@"\"%@\"", option.opt_description]];
+            [line appendString:[NSString stringWithFormat:@"%@", option.opt_description]];
         }
         [usage appendString:line];
         [usage appendString:@"\n"];
